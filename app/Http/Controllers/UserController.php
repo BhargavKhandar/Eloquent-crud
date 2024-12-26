@@ -108,8 +108,8 @@ class UserController extends Controller
         );
 
         // First method to update data with Eloquent
-        $update_users = User::where('email', '=', $email)->limit(1)->get();
-        // $update_users =  User::where('email', '=',  $email)->first();
+        // $update_users = User::where('email', '=', $email)->limit(1)->get();
+        $update_users = User::where('email', '=', $email)->first();
         // return $update_users;
 
         // This first Eloqunt method are two update data method
@@ -119,7 +119,8 @@ class UserController extends Controller
         $update_users->age = $request->age;
         $update_users->city = $request->city;
 
-        $update_users[0]->save();
+        // $update_users[0]->save();
+        $updated = $update_users->save();
 
         // Second method
         // foreach ($update_users as $update_user)
@@ -132,7 +133,7 @@ class UserController extends Controller
         //     $update_users->save();
         // }
 
-        return $update_users;
+        // return $update_users;
 
         // Second method to update data Eloquent
         // $update_user = User::where('id', $id)
@@ -143,7 +144,7 @@ class UserController extends Controller
         //                         'city' => $request->city
         //                     ]);
 
-        if ($update_user) {
+        if ($updated) {
             return redirect()->route('user.index')->with('success', 'User update successfully.');
         } else {
             return redirect()->route('user.edit')->with('error', 'User not updated!');
